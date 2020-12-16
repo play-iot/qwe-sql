@@ -29,9 +29,9 @@ public final class ReferenceEntityMetadata {
         return (TableField) this.foreignKey.getFields().get(0);
     }
 
-    public @NonNull EntityMetadata findByTable(@NonNull io.github.zero88.msa.sql.MetadataIndex index) {
+    public @NonNull EntityMetadata findByTable(@NonNull MetadataIndex index) {
         return index.findByTable(table)
-                    .orElseThrow(() -> new ImplementationError(ErrorCode.SERVICE_NOT_FOUND,
+                    .orElseThrow(() -> new ImplementationError(ErrorCode.parse("SERVICE_NOT_FOUND"),
                                                                "Not found Entity Metadata by table " +
                                                                table.getName()));
     }

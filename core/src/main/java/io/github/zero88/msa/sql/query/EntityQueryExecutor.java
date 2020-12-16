@@ -17,12 +17,12 @@ import io.github.zero88.msa.bp.dto.jpa.Sort;
 import io.github.zero88.msa.bp.dto.msg.RequestData;
 import io.github.zero88.msa.bp.dto.msg.RequestFilter;
 import io.github.zero88.msa.bp.exceptions.BlueprintException;
-import io.github.zero88.msa.bp.exceptions.ErrorCode;
 import io.github.zero88.msa.bp.exceptions.ImplementationError;
 import io.github.zero88.msa.bp.utils.JsonUtils;
-import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.exceptions.DatabaseException;
 import io.github.zero88.msa.sql.handler.EntityConstraintHolder;
+import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.pojos.DMLPojo;
 import io.github.zero88.msa.sql.validation.OperationValidator;
 import io.reactivex.Maybe;
@@ -50,7 +50,7 @@ public interface EntityQueryExecutor<P extends VertxPojo> {
     @NonNull
     static Single sneakyThrowDBError(@NonNull Throwable throwable) {
         if (throwable instanceof TooManyRowsException) {
-            return Single.error(new ImplementationError(ErrorCode.DATABASE_ERROR,
+            return Single.error(new ImplementationError(DatabaseException.CODE,
                                                         "Query is not correct, the result contains more than one " +
                                                         "record", throwable));
         }
@@ -67,7 +67,7 @@ public interface EntityQueryExecutor<P extends VertxPojo> {
     @NonNull
     static Single unableDelete(String clue) {
         return Single.error(
-            new BlueprintException("Cannot delete record", new HiddenException(ErrorCode.DATABASE_ERROR, clue, null)));
+            new BlueprintException("Cannot delete record", new HiddenException(DatabaseException.CODE, clue, null)));
     }
 
     /**
