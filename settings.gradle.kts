@@ -8,7 +8,8 @@
  */
 
 rootProject.name = "msa-sql"
-include("type")
-include("rx-jdbc")
-include("core")
-include("service")
+include(":type")
+include(":rx-jdbc")
+include(":core")
+include(":service")
+include(":integtest")

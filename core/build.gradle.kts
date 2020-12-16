@@ -10,7 +10,8 @@ dependencies {
     }
     api(ZeroLibs.rql_jooq)
     api(DatabaseLibs.hikari)
-    api(DatabaseLibs.jooqMeta)
+    api(DatabaseLibs.jooq)
+    api(DatabaseLibs.jooqVertxRx)
 
     testFixturesApi(TestLibs.junit5Api)
     testFixturesApi(TestLibs.jsonAssert)

@@ -18,7 +18,7 @@ import io.github.jklingsporn.vertx.jooq.shared.internal.jdbc.JDBCQueryExecutor;
 import io.github.jklingsporn.vertx.jooq.shared.internal.jdbc.JDBCQueryResult;
 import io.github.zero88.exceptions.HiddenException;
 import io.github.zero88.msa.bp.exceptions.BlueprintException;
-import io.github.zero88.msa.sql.DatabaseException;
+import io.github.zero88.msa.sql.exceptions.DatabaseException;
 import io.github.zero88.utils.Functions;
 import io.reactivex.Observable;
 import io.reactivex.Single;
