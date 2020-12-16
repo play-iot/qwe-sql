@@ -21,7 +21,6 @@ allprojects {
     repositories {
         mavenLocal()
         maven { url = uri("https://oss.sonatype.org/content/groups/public/") }
-        maven { url = uri("https://maven.pkg.github.com/zero88/msa-blueprint") }
         mavenCentral()
         jcenter()
     }
@@ -87,6 +86,9 @@ subprojects {
                 this as StandardJavadocDocletOptions
                 tags = mutableListOf("apiNote:a:API Note:", "implSpec:a:Implementation Requirements:",
                                      "implNote:a:Implementation Note:")
+                if (JavaVersion.current().isJava8Compatible) {
+                    addBooleanOption("Xdoclint:none", true)
+                }
             }
         }
         test {
