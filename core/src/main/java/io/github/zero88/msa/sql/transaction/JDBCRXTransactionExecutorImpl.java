@@ -13,7 +13,7 @@ import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
 import org.jooq.exception.DataAccessException;
 
-import io.github.zero88.msa.sql.TransactionalException;
+import io.github.zero88.msa.sql.exceptions.TransactionalException;
 import io.github.zero88.utils.Functions;
 import io.reactivex.Single;
 

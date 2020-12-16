@@ -1,4 +1,4 @@
-package io.github.zero88.msa.sql;
+package io.github.zero88.msa.sql.exceptions;
 
 import io.github.zero88.msa.bp.exceptions.ErrorCode;
 

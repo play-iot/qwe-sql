@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.jooq.Converter;
 
-import io.github.zero88.msa.sql.DatabaseException;
+import io.github.zero88.msa.sql.exceptions.DBConverterException;
 
 public final class DurationConverter implements Converter<String, Duration> {
 
@@ -18,7 +18,7 @@ public final class DurationConverter implements Converter<String, Duration> {
         try {
             return Duration.parse(databaseObject);
         } catch (DateTimeParseException e) {
-            throw new DatabaseException("Wrong Duration data format: " + databaseObject, e);
+            throw new DBConverterException("Wrong Duration data format: " + databaseObject, e);
         }
     }
 

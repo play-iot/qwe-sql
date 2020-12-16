@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.zero88.msa.sql.DatabaseException;
+import io.github.zero88.msa.sql.exceptions.DBConverterException;
 
 public class DurationConverterTest {
 
@@ -25,7 +25,7 @@ public class DurationConverterTest {
 
     @Test
     public void test_invalid_pattern() {
-        Assertions.assertThrows(DatabaseException.class, () -> this.converter.from("P1M"));
+        Assertions.assertThrows(DBConverterException.class, () -> this.converter.from("P1M"));
     }
 
     @Test

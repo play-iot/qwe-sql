@@ -1,11 +1,11 @@
-package io.github.zero88.msa.sql;
+package io.github.zero88.msa.sql.exceptions;
 
 import io.github.zero88.msa.bp.exceptions.BlueprintException;
 import io.github.zero88.msa.bp.exceptions.ErrorCode;
 
 public class DatabaseException extends BlueprintException {
 
-    public static ErrorCode DATABASE_ERROR = new ErrorCode("DATABASE_ERROR");
+    public static final ErrorCode DATABASE_ERROR = ErrorCode.parse("DATABASE_ERROR");
 
     protected DatabaseException(ErrorCode errorCode, String message, Throwable e) {
         super(errorCode, message, e);

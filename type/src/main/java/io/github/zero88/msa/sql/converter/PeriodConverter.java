@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.jooq.Converter;
 
-import io.github.zero88.msa.bp.exceptions.DatabaseException;
+import io.github.zero88.msa.sql.exceptions.DBConverterException;
 
 public final class PeriodConverter implements Converter<String, Period> {
 
@@ -18,7 +18,7 @@ public final class PeriodConverter implements Converter<String, Period> {
         try {
             return Period.parse(databaseObject);
         } catch (DateTimeParseException e) {
-            throw new DatabaseException("Wrong Period data format: " + databaseObject, e);
+            throw new DBConverterException("Wrong Period data format: " + databaseObject, e);
         }
     }
 
