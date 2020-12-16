@@ -1,7 +1,3 @@
-plugins {
-    `java-test-fixtures`
-}
-
 dependencies {
     api(ZeroLibs.bp_base)
     api(ZeroLibs.jpaExt)

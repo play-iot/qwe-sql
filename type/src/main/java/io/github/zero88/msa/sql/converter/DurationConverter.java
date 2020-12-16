@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.jooq.Converter;
 
-import io.github.zero88.msa.bp.exceptions.DatabaseException;
+import io.github.zero88.msa.sql.DatabaseException;
 
 public final class DurationConverter implements Converter<String, Duration> {
 
