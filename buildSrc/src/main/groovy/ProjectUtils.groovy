@@ -2,6 +2,10 @@ import org.gradle.api.Project
 
 class ProjectUtils {
 
+    static boolean isBlank(String text) {
+        return text == null || "" == text.trim()
+    }
+
     static boolean isSubProject(Project project, String projectName) {
         if (project.parent == null) {
             return project.name == projectName
@@ -30,7 +34,7 @@ class ProjectUtils {
         if (sf.exists()) {
             def props = new Properties()
             sf.withInputStream { props.load(it) }
-            props.findAll { Strings.isBlank(extraProp(project, it.key.toString())) }
+            props.findAll { isBlank(extraProp(project, it.key.toString())) }
                  .each { k, v -> project.ext.set(k, v) }
         }
     }
@@ -40,7 +44,7 @@ class ProjectUtils {
     }
 
     static String extraProp(Project project, String key, String fallback) {
-        return project.ext.has(key) && !Strings.isBlank((String) project.ext.get(key)) ? (String) project.ext.get(key) :
+        return project.ext.has(key) && !isBlank((String) project.ext.get(key)) ? (String) project.ext.get(key) :
                fallback
     }
 

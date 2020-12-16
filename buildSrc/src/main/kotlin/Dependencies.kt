@@ -17,11 +17,13 @@ object PluginLibs {
         const val sonarQube = "3.0"
         const val docker = "6.6.1"
         const val nexusStaging = "0.22.0"
+        const val jooq = "5.2"
     }
 
     const val docker = "com.bmuschko.docker-remote-api"
     const val sonarQube = "org.sonarqube"
     const val nexusStaging = "io.codearte.nexus-staging"
+    const val jooq = "nu.studer.jooq"
 }
 
 object JacksonLibs {
@@ -92,7 +94,7 @@ object DatabaseLibs {
 
     object Version {
 
-        const val jooq = "3.14.0"
+        const val jooq = "3.13.5"
         const val h2 = "1.4.200"
         const val pgsql = "42.2.5"
         const val hikari = "3.2.0"

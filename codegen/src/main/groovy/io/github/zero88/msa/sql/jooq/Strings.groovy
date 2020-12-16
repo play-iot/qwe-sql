@@ -1,3 +1,5 @@
+package io.github.zero88.msa.sql.jooq
+
 class Strings {
 
     static boolean isBlank(String text) {

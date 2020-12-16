@@ -10,6 +10,7 @@ plugins {
     signing
     id(PluginLibs.sonarQube) version PluginLibs.Version.sonarQube
     id(PluginLibs.nexusStaging) version PluginLibs.Version.nexusStaging
+    id(PluginLibs.jooq) version PluginLibs.Version.jooq apply false
 }
 val jacocoHtml: String? by project
 val semanticVersion: String by project
