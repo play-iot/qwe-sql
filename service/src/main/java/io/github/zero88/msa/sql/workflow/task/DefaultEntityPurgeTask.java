@@ -5,24 +5,22 @@ import java.util.List;
 import org.jooq.Condition;
 
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
+import io.github.zero88.msa.bp.dto.JsonData;
 import io.github.zero88.msa.bp.dto.msg.RequestData;
+import io.github.zero88.msa.bp.event.EventAction;
+import io.github.zero88.msa.bp.event.EventMessage;
+import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.ReferenceEntityMetadata;
+import io.github.zero88.msa.sql.pojos.DMLPojo;
 import io.github.zero88.msa.sql.service.cache.EntityServiceIndex;
+import io.github.zero88.msa.sql.workflow.task.EntityTask.EntityPurgeTask;
 import io.github.zero88.utils.Functions;
-import io.github.zero88.utils.Strings;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-
-import io.github.zero88.msa.bp.dto.JsonData;
-import io.github.zero88.msa.bp.event.EventAction;
-import io.github.zero88.msa.bp.event.EventMessage;
-import io.github.zero88.msa.sql.EntityMetadata;
-import io.github.zero88.msa.sql.ReferenceEntityMetadata;
-import io.github.zero88.msa.sql.pojos.DMLPojo;
-import io.github.zero88.msa.sql.workflow.task.EntityTask.EntityPurgeTask;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -69,11 +67,9 @@ final class DefaultEntityPurgeTask<P extends VertxPojo> implements EntityPurgeTa
                                                 @NonNull ReferenceEntityMetadata ref, @NonNull Object pk) {
         final EntityMetadata refMetadata = ref.findByTable(definitionContext().entityHandler().metadataIndex());
         final Condition eq = ref.getField().eq(pk);
-        final String address = Functions.getIfThrow(() -> index.lookupApiAddress(refMetadata)).orElse(null);
-        if (Strings.isBlank(address)) {
-            return deleteDirectly(refMetadata, eq);
-        }
-        return invokeRemoteDeletion(reqData, refMetadata, eq, address);
+        return Functions.getIfThrow(() -> index.lookupApiAddress(refMetadata))
+                        .map(address -> invokeRemoteDeletion(reqData, refMetadata, eq, address))
+                        .orElseGet(() -> deleteDirectly(refMetadata, eq));
     }
 
     //TODO temporary way to batch delete. Not safe. Must implement ASAP https://github.com/NubeIO/iot-engine/issues/294

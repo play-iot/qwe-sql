@@ -97,9 +97,7 @@ public interface SchemaInitializer extends SchemaExecutor {
         if (Objects.nonNull(table.getPrimaryKey())) {
             constraints = Stream.concat(constraints, Stream.of(table.getPrimaryKey().constraint()));
         }
-        if (Objects.nonNull(table.getReferences())) {
-            constraints = Stream.concat(constraints, table.getReferences().stream().map(ForeignKey::constraint));
-        }
+        constraints = Stream.concat(constraints, table.getReferences().stream().map(ForeignKey::constraint));
         return Collections.singletonMap(table, constraints.collect(Collectors.toSet()));
     }
 

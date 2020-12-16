@@ -1,6 +1,5 @@
 package io.github.zero88.msa.sql.query;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import org.jooq.UpdatableRecord;
@@ -8,9 +7,8 @@ import org.jooq.UpdatableRecord;
 import io.github.jklingsporn.vertx.jooq.rx.VertxDAO;
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 import io.github.zero88.msa.bp.dto.msg.RequestData;
-import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.EntityMetadata;
-import io.github.zero88.msa.sql.marker.EntityReferences;
+import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.marker.ReferencingEntityMarker;
 import io.reactivex.Single;
 
@@ -65,23 +63,22 @@ public interface ReferencingQueryExecutor<P extends VertxPojo> extends SimpleQue
      * @since 1.0.0
      */
     default Single<Boolean> checkReferenceExistence(@NonNull RequestData reqData) {
-        final EntityReferences references = marker().referencedEntities();
-        return references.toObservable().flatMapSingle(entry -> {
-            final EntityMetadata meta = entry.getKey();
-            final Object key = findReferenceKey(reqData, meta, entry.getValue());
-            return Objects.isNull(key)
-                   ? Single.just(true)
-                   : fetchExists(queryBuilder().exist(meta, key)).switchIfEmpty(Single.error(meta.notFound(key)));
-        }).all(aBoolean -> aBoolean);
+        return marker().referencedEntities()
+                       .toObservable()
+                       .flatMapSingle(e -> this.findReferenceKey(reqData, e.getKey(), e.getValue())
+                                               .map(rk -> this.fetchExists(queryBuilder().exist(e.getKey(), rk))
+                                                              .switchIfEmpty(Single.error(e.getKey().notFound(rk))))
+                                               .orElseGet(() -> Single.just(true)))
+                       .all(aBoolean -> aBoolean);
     }
 
-    @SuppressWarnings("unchecked")
-    default Object findReferenceKey(@NonNull RequestData reqData, @NonNull EntityMetadata metadata,
-                                    @NonNull String refField) {
-        return metadata.getKey(reqData)
-                       .orElse(Optional.ofNullable(reqData.body().getValue(refField))
-                                       .map(k -> metadata.parseKey(k.toString()))
-                                       .orElse(null));
+    default Optional<?> findReferenceKey(@NonNull RequestData reqData, @NonNull EntityMetadata metadata,
+                                         @NonNull String refField) {
+        final Optional<?> key = metadata.getKey(reqData);
+        if (key.isPresent()) {
+            return key;
+        }
+        return Optional.ofNullable(reqData.body().getValue(refField)).map(k -> metadata.parseKey(k.toString()));
     }
 
 }

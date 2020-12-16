@@ -91,9 +91,7 @@ public interface HasReferenceRequestDecorator extends RequestDecorator {
         JsonObject filter = new JsonObject(marker().referencedEntities().computeRequest(body));
         Optional.ofNullable(extra).ifPresent(e -> filter.mergeIn(e, true));
         body = body.mergeIn(filter, true);
-        final JsonObject combineFilter = Objects.isNull(requestData.filter())
-                                         ? filter
-                                         : requestData.filter().mergeIn(filter, true);
+        final JsonObject combineFilter = requestData.filter().mergeIn(filter, true);
         return RequestData.builder()
                           .body(body)
                           .headers(requestData.headers())
