@@ -109,7 +109,7 @@ jobs:
                           -PbuildBy="GitHub Action" -PbuildHash=${{ github.sha }}
 
       - name: Publish GitHub Package
-        if: needs.context.outputs.shouldPublish == 'true'
+        if: needs.context.outputs.shouldPublish == 'true' && 'wtf' == 'true'
         run: |
           args=( -Psigning.gnupg.homeDir=/home/runner/.gnupg \
                  -Psigning.gnupg.keyName=${{ steps.import_gpg.outputs.keyid }} \
