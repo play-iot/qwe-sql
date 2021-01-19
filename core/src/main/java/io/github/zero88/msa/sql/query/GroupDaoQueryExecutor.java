@@ -14,8 +14,8 @@ import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 import io.github.zero88.msa.bp.dto.jpa.Pagination;
 import io.github.zero88.msa.bp.dto.msg.RequestData;
 import io.github.zero88.msa.sql.CompositeMetadata;
-import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.marker.GroupReferencingEntityMarker;
 import io.github.zero88.msa.sql.pojos.CompositePojo;
 import io.reactivex.Observable;
@@ -26,8 +26,7 @@ import lombok.NonNull;
 
 final class GroupDaoQueryExecutor<K, P extends VertxPojo, R extends UpdatableRecord<R>, D extends VertxDAO<R, P, K>,
                                      CP extends CompositePojo<P, CP>>
-    extends io.github.zero88.msa.sql.query.BaseDaoQueryExecutor<CP>
-    implements io.github.zero88.msa.sql.query.GroupQueryExecutor<CP> {
+    extends BaseDaoQueryExecutor<CP> implements GroupQueryExecutor<CP> {
 
     private final CompositeMetadata<K, P, R, D, CP> groupMetadata;
     private final GroupReferencingEntityMarker marker;
@@ -41,8 +40,8 @@ final class GroupDaoQueryExecutor<K, P extends VertxPojo, R extends UpdatableRec
     }
 
     @Override
-    public io.github.zero88.msa.sql.query.QueryBuilder queryBuilder() {
-        return new io.github.zero88.msa.sql.query.QueryBuilder(groupMetadata).references(groupMetadata.subItems());
+    public QueryBuilder queryBuilder() {
+        return new QueryBuilder(groupMetadata).references(groupMetadata.subItems());
     }
 
     @Override

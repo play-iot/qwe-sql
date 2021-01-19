@@ -9,17 +9,16 @@ import org.jooq.UpdatableRecord;
 
 import io.github.jklingsporn.vertx.jooq.rx.VertxDAO;
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
+import io.github.zero88.msa.bp.dto.jpa.Pagination;
+import io.github.zero88.msa.bp.dto.msg.RequestData;
+import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-import io.github.zero88.msa.bp.dto.jpa.Pagination;
-import io.github.zero88.msa.bp.dto.msg.RequestData;
-import io.github.zero88.msa.sql.handler.EntityHandler;
-import io.github.zero88.msa.sql.EntityMetadata;
-
 @SuppressWarnings("unchecked")
 class SimpleDaoQueryExecutor<K, P extends VertxPojo, R extends UpdatableRecord<R>, D extends VertxDAO<R, P, K>>
-    extends BaseDaoQueryExecutor<P> implements io.github.zero88.msa.sql.query.SimpleQueryExecutor<P> {
+    extends BaseDaoQueryExecutor<P> implements SimpleQueryExecutor<P> {
 
     SimpleDaoQueryExecutor(EntityHandler handler, EntityMetadata<K, P, R, D> metadata) {
         super(handler, metadata);

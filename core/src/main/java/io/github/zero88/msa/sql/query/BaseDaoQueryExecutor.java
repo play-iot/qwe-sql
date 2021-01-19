@@ -15,9 +15,9 @@ import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 import io.github.zero88.msa.bp.dto.jpa.Pagination;
 import io.github.zero88.msa.bp.dto.msg.RequestData;
 import io.github.zero88.msa.bp.utils.JsonUtils;
-import io.github.zero88.msa.sql.handler.EntityHandler;
-import io.github.zero88.msa.sql.EntityMetadata;
 import io.github.zero88.msa.sql.AuditDecorator;
+import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.pojos.DMLPojo;
 import io.github.zero88.msa.sql.validation.OperationValidator;
 import io.reactivex.Maybe;
@@ -50,8 +50,8 @@ abstract class BaseDaoQueryExecutor<P extends VertxPojo>
     }
 
     @Override
-    public io.github.zero88.msa.sql.query.QueryBuilder queryBuilder() {
-        return new io.github.zero88.msa.sql.query.QueryBuilder(metadata);
+    public QueryBuilder queryBuilder() {
+        return new QueryBuilder(metadata);
     }
 
     @Override

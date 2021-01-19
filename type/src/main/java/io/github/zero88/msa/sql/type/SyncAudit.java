@@ -8,7 +8,7 @@ import io.github.zero88.utils.DateTimes;
 import io.github.zero88.utils.Strings;
 import io.vertx.core.json.JsonObject;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@JsonNaming(SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @ToString
 public final class SyncAudit implements JsonData {
 

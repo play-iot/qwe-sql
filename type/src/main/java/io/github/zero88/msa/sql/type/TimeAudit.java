@@ -3,11 +3,11 @@ package io.github.zero88.msa.sql.type;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
+import io.github.zero88.msa.bp.dto.JsonData;
 import io.github.zero88.utils.DateTimes;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import io.github.zero88.msa.bp.dto.JsonData;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ import lombok.ToString;
 @Setter(value = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@JsonNaming(SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @ToString
 public final class TimeAudit implements JsonData {
 

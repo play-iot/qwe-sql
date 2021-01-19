@@ -31,18 +31,17 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 
 import io.github.zero88.jpa.Sortable.Direction;
+import io.github.zero88.msa.bp.dto.jpa.Pagination;
+import io.github.zero88.msa.bp.dto.jpa.Sort;
 import io.github.zero88.msa.bp.dto.msg.RequestFilter;
+import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.tables.JsonTable;
 import io.github.zero88.rql.jooq.JooqFieldMapper;
 import io.github.zero88.rql.jooq.JooqQueryContext;
 import io.github.zero88.rql.jooq.JooqRqlParser;
 import io.github.zero88.rql.jooq.visitor.JooqConditionRqlVisitor;
 import io.github.zero88.utils.Strings;
 import io.vertx.core.json.JsonObject;
-
-import io.github.zero88.msa.bp.dto.jpa.Pagination;
-import io.github.zero88.msa.bp.dto.jpa.Sort;
-import io.github.zero88.msa.sql.EntityMetadata;
-import io.github.zero88.msa.sql.tables.JsonTable;
 
 import lombok.NonNull;
 
@@ -160,7 +159,7 @@ public final class QueryBuilder {
             if (Objects.nonNull(references)) {
                 references.stream()
                           .filter(predicate)
-                          .forEach(meta -> doJoin(query, meta, io.github.zero88.msa.sql.query.QueryParser.fromReference(meta, filter), joinType));
+                          .forEach(meta -> doJoin(query, meta, QueryParser.fromReference(meta, filter), joinType));
             }
             return (ResultQuery<? extends Record>) paging(orderBy(query.where(condition(table, filter, false)), sort),
                                                           pagination);
@@ -316,7 +315,7 @@ public final class QueryBuilder {
             Optional.ofNullable(references)
                     .map(refs -> refs.stream()
                                      .flatMap(
-                                         meta -> io.github.zero88.msa.sql.query.QueryParser.streamRefs(meta, jsonSort).map(e -> sortField(meta, e))))
+                                         meta -> QueryParser.streamRefs(meta, jsonSort).map(e -> sortField(meta, e))))
                     .orElse(Stream.empty()));
         return sql.orderBy(sortFields.filter(Objects::nonNull).toArray(OrderField[]::new));
     }

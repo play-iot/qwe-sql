@@ -17,10 +17,10 @@ import io.github.zero88.msa.bp.dto.JsonData;
 import io.github.zero88.msa.bp.dto.msg.RequestData;
 import io.github.zero88.msa.bp.dto.msg.RequestFilter;
 import io.github.zero88.msa.bp.utils.JsonUtils;
-import io.github.zero88.msa.sql.CompositeMetadata;
-import io.github.zero88.msa.sql.handler.EntityHandler;
-import io.github.zero88.msa.sql.EntityMetadata;
 import io.github.zero88.msa.sql.AuditDecorator;
+import io.github.zero88.msa.sql.CompositeMetadata;
+import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.marker.EntityReferences;
 import io.github.zero88.msa.sql.marker.ReferencingEntityMarker;
 import io.github.zero88.msa.sql.pojos.CompositePojo;
@@ -101,9 +101,8 @@ final class ComplexDaoQueryExecutor<CP extends CompositePojo> extends JDBCRXGene
     }
 
     @Override
-    public io.github.zero88.msa.sql.query.QueryBuilder queryBuilder() {
-        return new io.github.zero88.msa.sql.query.QueryBuilder(base).references(Arrays.asList(resource, context))
-                                                                    .predicate(viewPredicate);
+    public QueryBuilder queryBuilder() {
+        return new QueryBuilder(base).references(Arrays.asList(resource, context)).predicate(viewPredicate);
     }
 
     @Override
@@ -148,7 +147,8 @@ final class ComplexDaoQueryExecutor<CP extends CompositePojo> extends JDBCRXGene
             final Object cKey = context.parseKey(reqData);
             if (Objects.isNull(src)) {
                 if (Objects.isNull(sKey)) {
-                    throw new IllegalArgumentException("Missing " + resource.singularKeyName() + " data");
+                    return Single.error(
+                        new IllegalArgumentException("Missing " + resource.singularKeyName() + " data"));
                 }
                 final RequestFilter filter = reqData.filter();
                 return isAbleToInsert(cKey, sKey, filter).map(k -> AuditDecorator.addCreationAudit(reqData, base, pojo))

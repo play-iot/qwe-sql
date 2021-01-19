@@ -4,9 +4,8 @@ import org.jooq.UpdatableRecord;
 
 import io.github.jklingsporn.vertx.jooq.rx.VertxDAO;
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
-
-import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.EntityMetadata;
+import io.github.zero88.msa.sql.handler.EntityHandler;
 import io.github.zero88.msa.sql.marker.TransitiveReferenceMarker;
 
 import lombok.NonNull;
@@ -17,8 +16,7 @@ import lombok.NonNull;
  * @param <P> Type of {@code VertxPojo}
  * @since 1.0.0
  */
-public interface TransitiveReferenceQueryExecutor<P extends VertxPojo> extends
-                                                                       io.github.zero88.msa.sql.query.ReferencingQueryExecutor<P> {
+public interface TransitiveReferenceQueryExecutor<P extends VertxPojo> extends ReferencingQueryExecutor<P> {
 
     /**
      * Create transitive reference query executor.
@@ -36,7 +34,7 @@ public interface TransitiveReferenceQueryExecutor<P extends VertxPojo> extends
     static <K, P extends VertxPojo, R extends UpdatableRecord<R>, D extends VertxDAO<R, P, K>> TransitiveReferenceQueryExecutor<P> create(
         @NonNull EntityHandler handler, @NonNull EntityMetadata<K, P, R, D> metadata,
         @NonNull TransitiveReferenceMarker marker) {
-        return new io.github.zero88.msa.sql.query.TransitiveReferenceDaoQueryExecutor<>(handler, metadata, marker);
+        return new TransitiveReferenceDaoQueryExecutor<>(handler, metadata, marker);
     }
 
     /**

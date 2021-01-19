@@ -87,10 +87,10 @@ public interface EntityQueryExecutor<P extends VertxPojo> {
      * Declares query builder.
      *
      * @return the query builder
-     * @see io.github.zero88.msa.sql.query.QueryBuilder
+     * @see QueryBuilder
      * @since 1.0.0
      */
-    @NonNull io.github.zero88.msa.sql.query.QueryBuilder queryBuilder();
+    @NonNull QueryBuilder queryBuilder();
 
     /**
      * Create {@code DAO} based on given {@code dao class}.
@@ -187,7 +187,7 @@ public interface EntityQueryExecutor<P extends VertxPojo> {
      *
      * @param query Given query
      * @return empty if resource is not existed or {@code true}
-     * @see io.github.zero88.msa.sql.query.QueryBuilder#exist(Table, Condition)
+     * @see QueryBuilder#exist(Table, Condition)
      * @since 1.0.0
      */
     @NonNull
