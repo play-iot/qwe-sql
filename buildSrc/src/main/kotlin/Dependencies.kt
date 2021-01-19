@@ -7,7 +7,6 @@ object UtilLibs {
     }
 
     const val lombok = "org.projectlombok:lombok:${Version.lombok}"
-    const val classgraph = "io.github.classgraph:classgraph:${Version.classgraph}"
 }
 
 object PluginLibs {
@@ -18,6 +17,7 @@ object PluginLibs {
         const val docker = "6.6.1"
         const val nexusStaging = "0.22.0"
         const val jooq = "5.2"
+        const val kotlinJvm = "1.4.21"
     }
 
     const val docker = "com.bmuschko.docker-remote-api"
@@ -65,10 +65,6 @@ object VertxLibs {
 
     const val core = "io.vertx:vertx-core:${Version.vertx}"
     const val codegen = "io.vertx:vertx-codegen:${Version.vertx}"
-    const val config = "io.vertx:vertx-config:${Version.vertx}"
-    const val web = "io.vertx:vertx-web:${Version.vertx}"
-    const val serviceDiscovery = "io.vertx:vertx-service-discovery:${Version.vertx}"
-    const val circuitBreaker = "io.vertx:vertx-circuit-breaker:${Version.vertx}"
     const val jdbc = "io.vertx:vertx-jdbc-client:${Version.vertx}"
 
     const val rx2 = "io.vertx:vertx-rx-java2:${Version.vertx}"
