@@ -49,7 +49,7 @@ jobs:
         id: conclusion
         shell: bash
         run: |
-          shouldBuild=${{ steps.context.outputs.ci_isPushed != 'true' && steps.context.outputs.isClosed != 'true' }}
+          shouldBuild=${{ steps.context.outputs.ci_isPushed != 'true' && steps.context.outputs.isClosed != 'true' && steps.context.outputs.isMerged != 'true' }}
           isSkipPublish=$(echo "${{ steps.context.outputs.commitMsg }}" | grep -P -q '^<skip_publish>.+$' && echo true || echo false)
           [[ $shouldBuild == true && $isSkipPublish != 'true' ]] && shouldAnalysis=true || shouldAnalysis=false
           onTagOrMaster=${{ steps.context.outputs.onDefaultBranch == 'true' || steps.context.outputs.isTag == 'true' }}
