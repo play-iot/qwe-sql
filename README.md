@@ -2,16 +2,16 @@
 
 `SQL` is one of [Carl](https://static.wikia.nocookie.net/dota2_gamepedia/images/e/eb/Vo_invoker_invo_spawn_01.mp3/revision/latest?cb=20201011165217) abilities.
 
-![build](https://github.com/zero88/msa-sql/workflows/build/badge.svg?branch=main)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/zero88/msa-sql?sort=semver)
+![build](https://github.com/zero88/qwe-sql/workflows/build-release/badge.svg?branch=main)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/zero88/qwe-sql?sort=semver)
 ![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/io.github.zero88.msa.sql/core?server=https%3A%2F%2Foss.sonatype.org%2F)
 ![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/io.github.zero88.msa.sql/core?server=https%3A%2F%2Foss.sonatype.org%2F)
 
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=zero88_msa-sql&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=zero88_msa-sql)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=zero88_msa-sql&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=zero88_msa-sql)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=zero88_msa-sql&metric=security_rating)](https://sonarcloud.io/dashboard?id=zero88_msa-sql)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=zero88_msa-sql&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=zero88_msa-sql)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=zero88_msa-sql&metric=coverage)](https://sonarcloud.io/dashboard?id=zero88_msa-sql)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=zero88_qwe-sql&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=zero88_qwe-sql)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=zero88_qwe-sql&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=zero88_qwe-sql)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=zero88_qwe-sql&metric=security_rating)](https://sonarcloud.io/dashboard?id=zero88_qwe-sql)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=zero88_qwe-sql&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=zero88_qwe-sql)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=zero88_qwe-sql&metric=coverage)](https://sonarcloud.io/dashboard?id=zero88_qwe-sql)
 
 
 ## Overview
