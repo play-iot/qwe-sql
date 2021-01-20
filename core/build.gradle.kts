@@ -18,7 +18,7 @@ dependencies {
     testFixturesApi(TestLibs.junit)
     testFixturesApi(VertxLibs.junit)
     testFixturesApi(LogLibs.logback)
-    testFixturesApi(testFixtures(ZeroLibs.bp_base))
+    testFixturesApi(testFixtures(ZeroLibs.qwe_base))
     testFixturesCompileOnly(UtilLibs.lombok)
     testFixturesAnnotationProcessor(UtilLibs.lombok)
 }

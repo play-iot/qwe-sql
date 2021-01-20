@@ -17,8 +17,8 @@ import io.github.jklingsporn.vertx.jooq.shared.internal.QueryResult;
 import io.github.jklingsporn.vertx.jooq.shared.internal.jdbc.JDBCQueryExecutor;
 import io.github.jklingsporn.vertx.jooq.shared.internal.jdbc.JDBCQueryResult;
 import io.github.zero88.exceptions.HiddenException;
-import io.github.zero88.msa.bp.exceptions.BlueprintException;
-import io.github.zero88.msa.sql.exceptions.DatabaseException;
+import io.github.zero88.qwe.exceptions.CarlException;
+import io.github.zero88.qwe.sql.exceptions.DatabaseException;
 import io.github.zero88.utils.Functions;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -54,10 +54,10 @@ public class JDBCRXGenericQueryExecutor extends AbstractQueryExecutor
                 blockingCodeHandler.handle((Promise<X>) event);
             } catch (DataAccessException e) {
                 Throwable cause = Functions.getIfThrow(() -> e.getCause().getCause().getCause()).orElse(null);
-                if (cause instanceof BlueprintException) {
+                if (cause instanceof CarlException) {
                     if (e.sqlStateClass() == SQLStateClass.C22_DATA_EXCEPTION ||
                         e.sqlStateClass() == SQLStateClass.C23_INTEGRITY_CONSTRAINT_VIOLATION) {
-                        throw (BlueprintException) cause;
+                        throw (CarlException) cause;
                     }
                     throw new DatabaseException(
                         "Database error. Code: " + e.sqlStateClass() + " | Cause:" + cause.getMessage(),

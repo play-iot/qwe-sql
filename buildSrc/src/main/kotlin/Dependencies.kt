@@ -60,15 +60,13 @@ object VertxLibs {
 
     object Version {
 
-        const val vertx = "3.9.2"
+        const val vertx = "4.0.0"
     }
 
     const val core = "io.vertx:vertx-core:${Version.vertx}"
     const val codegen = "io.vertx:vertx-codegen:${Version.vertx}"
     const val jdbc = "io.vertx:vertx-jdbc-client:${Version.vertx}"
-
     const val rx2 = "io.vertx:vertx-rx-java2:${Version.vertx}"
-
     const val junit = "io.vertx:vertx-unit:${Version.vertx}"
     const val junit5 = "io.vertx:vertx-junit5:${Version.vertx}"
 
@@ -119,17 +117,17 @@ object ZeroLibs {
         const val utils = "1.0.1"
         const val jpaExt = "0.9.0"
         const val rSql = "0.9.0"
-        const val blueprint = "0.5.3"
+        const val qwe = "0.6.0-SNAPSHOT"
     }
 
     const val utils = "io.github.zero88:java-utils:${Version.utils}"
     const val jpaExt = "io.github.zero88:jpa-ext:${Version.jpaExt}"
     const val rql_jooq = "io.github.zero88:rql-jooq:${Version.rSql}"
-    const val bp_base = "io.github.zero88.msa.bp:base:${Version.blueprint}"
-    const val bp_cache = "io.github.zero88.msa.bp:cache:${Version.blueprint}"
-    const val bp_http = "io.github.zero88.msa.bp:http:${Version.blueprint}"
-    const val bp_http_server = "io.github.zero88.msa.bp.http:server:${Version.blueprint}"
-    const val bp_http_client = "io.github.zero88.msa.bp.http:client:${Version.blueprint}"
-    const val bp_micro = "io.github.zero88.msa.bp:micro:${Version.blueprint}"
-    const val bp_micro_metadata = "io.github.zero88.msa.bp.micro:metadata:${Version.blueprint}"
+    const val qwe_base = "io.github.zero88.qwe:base:${Version.qwe}"
+    const val qwe_cache = "io.github.zero88.qwe:cache:${Version.qwe}"
+    const val qwe_http = "io.github.zero88.qwe:http:${Version.qwe}"
+    const val qwe_http_server = "io.github.zero88.qwe.http:server:${Version.qwe}"
+    const val qwe_http_client = "io.github.zero88.qwe.http:client:${Version.qwe}"
+    const val qwe_micro = "io.github.zero88.qwe:micro:${Version.qwe}"
+    const val qwe_micro_metadata = "io.github.zero88.qwe.micro:metadata:${Version.qwe}"
 }

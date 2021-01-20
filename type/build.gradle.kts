@@ -1,5 +1,5 @@
 dependencies {
-    api(ZeroLibs.bp_base)
+    api(ZeroLibs.qwe_base)
     implementation(DatabaseLibs.jooq)
     implementation(DatabaseLibs.jooqVertxRx)
 }
