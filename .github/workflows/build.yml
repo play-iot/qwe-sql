@@ -6,6 +6,7 @@ on:
     tags: [ 'v*' ]
     paths-ignore:
       - '.github/ISSUE_TEMPLATE/**'
+      - '.github/*.yml'
       - 'README.md'
       - 'LICENSE'
   pull_request:
