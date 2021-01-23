@@ -2,7 +2,6 @@ package io.github.zero88.qwe.sql.service.decorator;
 
 import java.util.List;
 
-import io.github.zero88.qwe.component.SharedDataDelegate;
 import io.github.zero88.qwe.dto.msg.RequestData;
 
 import lombok.NonNull;
@@ -12,7 +11,7 @@ import lombok.NonNull;
  *
  * @since 1.0.0
  */
-public interface RequestDecoratorExtension extends RequestDecorator, SharedDataDelegate<RequestDecoratorExtension> {
+public interface RequestDecoratorExtension extends RequestDecorator {
 
     /**
      * Defines the wrapped request decorator.

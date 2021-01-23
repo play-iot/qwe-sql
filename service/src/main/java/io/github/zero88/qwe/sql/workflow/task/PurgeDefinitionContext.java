@@ -21,7 +21,7 @@ public interface PurgeDefinitionContext extends EntityDefinitionContext {
 
     @NonNull
     default EntityServiceIndex entityServiceIndex() {
-        return entityHandler().sharedData(EntityServiceIndex.DATA_KEY);
+        return entityHandler().sharedData().getData(EntityServiceIndex.DATA_KEY);
     }
 
 }

@@ -1,7 +1,5 @@
 package io.github.zero88.qwe.sql.workflow.task;
 
-import java.util.function.Function;
-
 import io.github.zero88.qwe.sql.handler.EntityHandler;
 import io.github.zero88.qwe.workflow.TaskDefinitionContext;
 import io.vertx.core.Vertx;
@@ -48,16 +46,6 @@ public interface EntityDefinitionContext extends TaskDefinitionContext {
     @Override
     default boolean isConcurrent() {
         return true;
-    }
-
-    @Override
-    default <D> D getSharedDataValue(String dataKey) {
-        return entityHandler().sharedData(dataKey);
-    }
-
-    @Override
-    default TaskDefinitionContext registerSharedData(@NonNull Function<String, Object> sharedDataFunc) {
-        return this;
     }
 
     /**

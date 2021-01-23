@@ -12,6 +12,7 @@ import org.jooq.UpdatableRecord;
 import io.github.jklingsporn.vertx.jooq.rx.VertxDAO;
 import io.github.jklingsporn.vertx.jooq.rx.jdbc.JDBCRXGenericQueryExecutor;
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
+import io.github.zero88.qwe.component.HasSharedData;
 import io.github.zero88.qwe.dto.JsonData;
 import io.github.zero88.qwe.event.EventbusClient;
 import io.github.zero88.qwe.sql.EntityMetadata;
@@ -30,7 +31,7 @@ import lombok.NonNull;
  *
  * @since 1.0.0
  */
-public interface EntityHandler {
+public interface EntityHandler extends HasSharedData {
 
     /**
      * Parse pojo.
@@ -91,27 +92,6 @@ public interface EntityHandler {
      * @since 1.0.0
      */
     @NonNull Path dataDir();
-
-    /**
-     * Get shared data by {@code data key}.
-     *
-     * @param <D>     Type of {@code expectation result}
-     * @param dataKey the data key
-     * @return the result
-     * @since 1.0.0
-     */
-    <D> D sharedData(String dataKey);
-
-    /**
-     * Add shared data.
-     *
-     * @param <D>     Type of {@code expectation result}
-     * @param dataKey the data key
-     * @param data    the data
-     * @return the result
-     * @since 1.0.0
-     */
-    <D> D addSharedData(String dataKey, D data);
 
     /**
      * Get {@code dsl context}.

@@ -1,19 +1,24 @@
 package io.github.zero88.qwe.sql;
 
-import io.github.zero88.qwe.component.UnitProvider;
+import io.github.zero88.qwe.component.ComponentProvider;
+import io.github.zero88.qwe.component.SharedDataLocalProxy;
 import io.github.zero88.qwe.sql.handler.EntityHandler;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public final class SqlProvider<T extends EntityHandler> implements UnitProvider<SqlVerticle> {
+public final class SqlProvider<T extends EntityHandler> implements ComponentProvider<SqlVerticle> {
 
     private final Class<T> entityHandlerClass;
 
     @Override
-    public SqlVerticle<T> get() { return new SqlVerticle<>(entityHandlerClass); }
+    public Class<SqlVerticle> componentClass() {
+        return SqlVerticle.class;
+    }
 
     @Override
-    public Class<SqlVerticle> unitClass() { return SqlVerticle.class; }
+    public SqlVerticle provide(SharedDataLocalProxy sharedDataLocalProxy) {
+        return new SqlVerticle<>(sharedDataLocalProxy, entityHandlerClass);
+    }
 
 }

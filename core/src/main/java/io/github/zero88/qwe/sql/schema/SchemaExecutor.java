@@ -2,8 +2,8 @@ package io.github.zero88.qwe.sql.schema;
 
 import io.github.zero88.qwe.sql.handler.EntityHandler;
 import io.reactivex.Single;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.github.zero88.qwe.event.EventMessage;
 

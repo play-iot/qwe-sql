@@ -14,12 +14,12 @@ import org.slf4j.LoggerFactory;
 import io.github.zero88.qwe.IConfig;
 import io.github.zero88.qwe.TestHelper;
 import io.github.zero88.qwe.TestHelper.VertxHelper;
-import io.github.zero88.qwe.component.SharedDataDelegate;
+import io.github.zero88.qwe.component.ComponentSharedDataHelper;
 import io.github.zero88.qwe.event.EventbusClient;
-import io.github.zero88.qwe.utils.Configs;
 import io.github.zero88.qwe.sql.schema.SchemaHandler;
 import io.github.zero88.qwe.sql.schema.SchemaInitializer;
 import io.github.zero88.qwe.sql.schema.SchemaMigrator;
+import io.github.zero88.qwe.utils.Configs;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
@@ -90,7 +90,7 @@ public abstract class BaseSqlTest {
     protected void setup(TestContext context) { }
 
     protected EventbusClient controller() {
-        return SharedDataDelegate.getEventController(vertx, sharedKey);
+        return EventbusClient.create(vertx, sharedKey);
     }
 
     protected void stopSQL(TestContext context) {
@@ -102,8 +102,7 @@ public abstract class BaseSqlTest {
 
     protected <T extends AbstractEntityHandler> T startSQL(TestContext context, Catalog catalog,
                                                            Class<T> handlerClass) {
-        SqlVerticle<T> v = VertxHelper.deploy(vertx, context, options,
-                                              new SqlVerticle<>(handlerClass).registerSharedKey(sharedKey),
+        SqlVerticle<T> v = VertxHelper.deploy(vertx, context, options, create(handlerClass),
                                               TestHelper.TEST_TIMEOUT_SEC * 2);
         deployId = v.deploymentID();
         return v.getContext().getEntityHandler();
@@ -112,7 +111,11 @@ public abstract class BaseSqlTest {
     protected <T extends AbstractEntityHandler> void startSQLFailed(TestContext context, Catalog catalog,
                                                                     Class<T> handlerClass,
                                                                     Handler<Throwable> consumer) {
-        VertxHelper.deployFailed(vertx, context, options, new SqlVerticle<>(handlerClass), consumer);
+        VertxHelper.deployFailed(vertx, context, options, create(handlerClass), consumer);
+    }
+
+    private <T extends AbstractEntityHandler> SqlVerticle create(Class<T> handlerClass) {
+        return new SqlProvider<>(handlerClass).provide(ComponentSharedDataHelper.create(vertx, SqlVerticle.class));
     }
 
 }

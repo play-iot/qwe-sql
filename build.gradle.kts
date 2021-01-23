@@ -17,7 +17,7 @@ val semanticVersion: String by project
 val buildHash: String by project
 
 allprojects {
-    group = "io.github.zero88.msa.sql"
+    group = "io.github.zero88.qwe.sql"
 
     repositories {
         mavenLocal()
@@ -120,11 +120,11 @@ subprojects {
                 pom {
                     name.set(project.name)
                     description.set(project.ext.get("description") as String)
-                    url.set("https://github.com/zero88/msa-sql")
+                    url.set("https://github.com/zero88/qwe-sql")
                     licenses {
                         license {
                             name.set("The Apache License, Version 2.0")
-                            url.set("https://github.com/zero88/msa-sql/blob/master/LICENSE")
+                            url.set("https://github.com/zero88/qwe-sql/blob/master/LICENSE")
                         }
                     }
                     developers {
@@ -134,9 +134,9 @@ subprojects {
                         }
                     }
                     scm {
-                        connection.set("scm:git:git://git@github.com:zero88/msa-sql.git")
-                        developerConnection.set("scm:git:ssh://git@github.com:zero88/msa-sql.git")
-                        url.set("https://github.com/zero88/msa-sql")
+                        connection.set("scm:git:git://git@github.com:zero88/qwe-sql.git")
+                        developerConnection.set("scm:git:ssh://git@github.com:zero88/qwe-sql.git")
+                        url.set("https://github.com/zero88/qwe-sql")
                     }
                 }
             }

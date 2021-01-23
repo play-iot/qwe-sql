@@ -8,13 +8,12 @@ import org.jooq.Table;
 
 import io.github.zero88.qwe.dto.ErrorData;
 import io.github.zero88.qwe.dto.msg.RequestData;
-import io.github.zero88.qwe.sql.handler.EntityHandler;
-import io.reactivex.Single;
-import io.vertx.core.json.JsonObject;
-
 import io.github.zero88.qwe.event.EventAction;
 import io.github.zero88.qwe.event.EventMessage;
 import io.github.zero88.qwe.event.EventbusClient;
+import io.github.zero88.qwe.sql.handler.EntityHandler;
+import io.reactivex.Single;
+import io.vertx.core.json.JsonObject;
 
 import lombok.NonNull;
 
@@ -85,7 +84,7 @@ public interface SchemaHandler {
      * @since 1.0.0
      */
     default @NonNull String readinessAddress(@NonNull EntityHandler entityHandler) {
-        return Optional.ofNullable((String) entityHandler.sharedData(READINESS_ADDRESS))
+        return Optional.ofNullable((String) entityHandler.sharedData().getData(READINESS_ADDRESS))
                        .orElse(this.getClass().getName() + ".readiness");
     }
 

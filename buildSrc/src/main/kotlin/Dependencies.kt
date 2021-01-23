@@ -117,7 +117,7 @@ object ZeroLibs {
         const val utils = "1.0.1"
         const val jpaExt = "0.9.0"
         const val rSql = "0.9.0"
-        const val qwe = "0.6.0-SNAPSHOT"
+        const val qwe = "0.6.1-SNAPSHOT"
     }
 
     const val utils = "io.github.zero88:java-utils:${Version.utils}"

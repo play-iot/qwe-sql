@@ -1,14 +1,19 @@
 package io.github.zero88.qwe.sql;
 
+import java.nio.file.Path;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.sql.DataSource;
 
 import org.jooq.Configuration;
 import org.jooq.impl.DefaultConfiguration;
 
-import io.github.zero88.qwe.component.SharedDataDelegate;
-import io.github.zero88.qwe.component.UnitVerticle;
+import io.github.zero88.qwe.IConfig;
+import io.github.zero88.qwe.component.Component;
+import io.github.zero88.qwe.component.ComponentVerticle;
+import io.github.zero88.qwe.component.SharedDataLocalProxy;
 import io.github.zero88.qwe.dto.ErrorMessage;
 import io.github.zero88.qwe.event.EventAction;
 import io.github.zero88.qwe.event.EventMessage;
@@ -16,27 +21,33 @@ import io.github.zero88.qwe.exceptions.CarlException;
 import io.github.zero88.qwe.exceptions.InitializerError;
 import io.github.zero88.qwe.exceptions.InitializerError.MigrationError;
 import io.github.zero88.qwe.exceptions.converter.CarlExceptionConverter;
+import io.github.zero88.qwe.sql.SqlContext.CreationHandler;
 import io.github.zero88.qwe.sql.handler.EntityHandler;
 import io.github.zero88.qwe.utils.ExecutorHelpers;
+import io.github.zero88.utils.Reflections.ReflectionClass;
 import io.reactivex.Single;
-import io.vertx.core.Future;
 import io.vertx.core.Promise;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-public final class SqlVerticle<T extends EntityHandler> extends UnitVerticle<SqlConfig, SqlContext<T>> {
+import lombok.NonNull;
 
+public final class SqlVerticle<T extends EntityHandler> extends ComponentVerticle<SqlConfig, SqlContext<T>> {
+
+    private final Class<T> entityHandlerClass;
     private DataSource dataSource;
+    private T handler;
 
-    SqlVerticle(Class<T> handlerClass) {
-        super(new SqlContext<>(handlerClass));
+    public SqlVerticle(SharedDataLocalProxy sharedData, Class<T> handlerClass) {
+        super(sharedData);
+        this.entityHandlerClass = handlerClass;
     }
 
     @Override
     public void start() {
         super.start();
         config.getHikariConfig()
-              .setJdbcUrl(config.computeJdbcUrl(() -> getSharedData(SharedDataDelegate.SHARED_DATADIR)));
+              .setJdbcUrl(config.computeJdbcUrl(() -> sharedData().getData(SharedDataLocalProxy.APP_DATADIR)));
         if (logger.isDebugEnabled()) {
             logger.debug("SQL config: {}", config.getHikariConfig().toJson());
         }
@@ -66,6 +77,12 @@ public final class SqlVerticle<T extends EntityHandler> extends UnitVerticle<Sql
     public Class<SqlConfig> configClass() { return SqlConfig.class; }
 
     @Override
+    public SqlContext<T> onSuccess(@NonNull Class<Component<IConfig, SqlContext<T>>> aClass, Path dataDir,
+                                   String sharedKey, String deployId) {
+        return new SqlContext<>(aClass, dataDir, sharedKey, deployId, this.handler);
+    }
+
+    @Override
     public String configFile() { return "sql.json"; }
 
     private void complete(Promise<Void> future, EventMessage result) {
@@ -77,8 +94,7 @@ public final class SqlVerticle<T extends EntityHandler> extends UnitVerticle<Sql
     }
 
     private Single<EventMessage> createSchemaThenData(Configuration jooqConfig) {
-        final String k = getSharedKey();
-        final T handler = ((AbstractEntityHandler) getContext().createHandler(jooqConfig, vertx)).registerSharedKey(k);
+        this.handler = createHandler(jooqConfig);
         return handler.before()
                       .map(EntityHandler::schemaHandler)
                       .flatMap(schemaHandler -> schemaHandler.execute(handler))
@@ -100,6 +116,13 @@ public final class SqlVerticle<T extends EntityHandler> extends UnitVerticle<Sql
         } else {
             throw new MigrationError("Failed to startup SQL component", t);
         }
+    }
+
+    private T createHandler(@NonNull Configuration configuration) {
+        Map<Class, Object> map = new LinkedHashMap<>();
+        map.put(Configuration.class, configuration);
+        map.put(SharedDataLocalProxy.class, sharedData());
+        return ReflectionClass.createObject(entityHandlerClass, map, new CreationHandler<>()).get();
     }
 
 }

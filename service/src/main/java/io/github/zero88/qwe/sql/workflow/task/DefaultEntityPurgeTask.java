@@ -19,8 +19,8 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -98,7 +98,7 @@ final class DefaultEntityPurgeTask<P extends VertxPojo> implements EntityPurgeTa
     }
 
     private JsonObject handleResult(@NonNull EventMessage message) {
-        LOGGER.debug(message.toJson());
+        LOGGER.debug(message.toJson().encode());
         if (message.isError()) {
             return message.getError().toJson();
         }
