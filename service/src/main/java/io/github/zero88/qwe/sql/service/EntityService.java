@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 import io.github.zero88.qwe.dto.msg.RequestFilter;
-import io.github.zero88.qwe.micro.metadata.ActionMethodMapping;
+import io.github.zero88.qwe.micro.http.ActionMethodMapping;
 import io.github.zero88.qwe.sql.EntityMetadata;
 import io.github.zero88.qwe.sql.query.EntityQueryExecutor;
 import io.github.zero88.qwe.sql.service.decorator.RequestDecorator;

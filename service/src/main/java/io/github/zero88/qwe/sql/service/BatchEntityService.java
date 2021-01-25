@@ -8,7 +8,7 @@ import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
 import io.github.zero88.qwe.dto.msg.RequestData;
 import io.github.zero88.qwe.event.EventAction;
 import io.github.zero88.qwe.event.EventContractor;
-import io.github.zero88.qwe.micro.metadata.ActionMethodMapping;
+import io.github.zero88.qwe.micro.http.ActionMethodMapping;
 import io.github.zero88.qwe.sql.EntityMetadata;
 import io.reactivex.Single;
 import io.vertx.core.json.JsonObject;

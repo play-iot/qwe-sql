@@ -3,24 +3,23 @@ package io.github.zero88.qwe.sql;
 import java.util.Objects;
 import java.util.UUID;
 
-import org.jooq.Catalog;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 import org.slf4j.LoggerFactory;
 
 import io.github.zero88.qwe.IConfig;
 import io.github.zero88.qwe.TestHelper;
-import io.github.zero88.qwe.TestHelper.VertxHelper;
-import io.github.zero88.qwe.component.ComponentSharedDataHelper;
+import io.github.zero88.qwe.component.ComponentTestHelper;
 import io.github.zero88.qwe.event.EventbusClient;
 import io.github.zero88.qwe.sql.schema.SchemaHandler;
 import io.github.zero88.qwe.sql.schema.SchemaInitializer;
 import io.github.zero88.qwe.sql.schema.SchemaMigrator;
 import io.github.zero88.qwe.utils.Configs;
-import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.ext.unit.TestContext;
@@ -33,10 +32,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public abstract class BaseSqlTest {
 
-    protected final String sharedKey = getClass().getName();
     protected Vertx vertx;
-    private DeploymentOptions options;
+    private SqlConfig config;
     private String deployId;
+    private EventbusClient eventbus;
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @BeforeClass
     public static void beforeSuite() {
@@ -67,11 +68,10 @@ public abstract class BaseSqlTest {
 
     @Before
     public final void before(TestContext context) {
-        SqlConfig sqlConfig = IConfig.from(Configs.loadJsonConfig("sql.json"), SqlConfig.class);
-        sqlConfig.setDialect(getDialect());
-        sqlConfig.getHikariConfig().setJdbcUrl(getJdbcUrl());
+        config = IConfig.from(Configs.loadJsonConfig("sql.json"), SqlConfig.class);
+        config.setDialect(getDialect());
+        config.getHikariConfig().setJdbcUrl(getJdbcUrl());
         vertx = Vertx.vertx().exceptionHandler(context.exceptionHandler());
-        options = new DeploymentOptions().setConfig(sqlConfig.toJson());
         setup(context);
     }
 
@@ -89,8 +89,8 @@ public abstract class BaseSqlTest {
 
     protected void setup(TestContext context) { }
 
-    protected EventbusClient controller() {
-        return EventbusClient.create(vertx, sharedKey);
+    protected EventbusClient eventbus() {
+        return eventbus;
     }
 
     protected void stopSQL(TestContext context) {
@@ -100,22 +100,17 @@ public abstract class BaseSqlTest {
         }
     }
 
-    protected <T extends AbstractEntityHandler> T startSQL(TestContext context, Catalog catalog,
-                                                           Class<T> handlerClass) {
-        SqlVerticle<T> v = VertxHelper.deploy(vertx, context, options, create(handlerClass),
-                                              TestHelper.TEST_TIMEOUT_SEC * 2);
-        deployId = v.deploymentID();
+    protected <T extends AbstractEntityHandler> T startSQL(TestContext context, Class<T> handlerClass) {
+        SqlVerticle<T> v = ComponentTestHelper.deploy(vertx, context, config.toJson(), new SqlProvider<>(handlerClass),
+                                                      folder.getRoot().toPath());
+        deployId = v.getContext().deployId();
+        eventbus = EventbusClient.create(v.sharedData());
         return v.getContext().getEntityHandler();
     }
 
-    protected <T extends AbstractEntityHandler> void startSQLFailed(TestContext context, Catalog catalog,
-                                                                    Class<T> handlerClass,
+    protected <T extends AbstractEntityHandler> void startSQLFailed(TestContext context, Class<T> handlerClass,
                                                                     Handler<Throwable> consumer) {
-        VertxHelper.deployFailed(vertx, context, options, create(handlerClass), consumer);
-    }
-
-    private <T extends AbstractEntityHandler> SqlVerticle create(Class<T> handlerClass) {
-        return new SqlProvider<>(handlerClass).provide(ComponentSharedDataHelper.create(vertx, SqlVerticle.class));
+        ComponentTestHelper.deployFailed(vertx, context, config.toJson(), new SqlProvider<>(handlerClass), consumer);
     }
 
 }

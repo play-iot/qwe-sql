@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import io.github.zero88.qwe.dto.JsonData;
 import io.github.zero88.qwe.dto.msg.RequestData;
 import io.github.zero88.qwe.event.EventAction;
-import io.github.zero88.qwe.event.EventClientProxy;
 import io.github.zero88.qwe.event.EventMessage;
+import io.github.zero88.qwe.event.EventbusProxy;
 import io.github.zero88.qwe.sql.CompositeMetadata;
 import io.github.zero88.qwe.sql.EntityMetadata;
 import io.github.zero88.qwe.sql.marker.ReferencedEntityMarker;
@@ -61,7 +61,7 @@ public interface ReferencedEntityService<CP extends CompositePojo, CM extends Co
      * @return the event client proxy
      * @since 1.0.0
      */
-    default @NonNull EventClientProxy proxyClient() {
+    default @NonNull EventbusProxy proxyClient() {
         return () -> entityHandler().eventClient();
     }
 

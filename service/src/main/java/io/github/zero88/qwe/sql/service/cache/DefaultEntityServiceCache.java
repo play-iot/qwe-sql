@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import io.github.zero88.qwe.cache.AbstractLocalCache;
 import io.github.zero88.qwe.cache.LocalDataCache;
-import io.github.zero88.qwe.micro.metadata.ServiceNotFoundException;
+import io.github.zero88.qwe.micro.ServiceNotFoundException;
 import io.github.zero88.qwe.sql.EntityMetadata;
 
 import lombok.NonNull;

@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import io.github.jklingsporn.vertx.jooq.shared.internal.VertxPojo;
-import io.github.zero88.qwe.micro.metadata.ActionMethodMapping;
-import io.github.zero88.qwe.micro.metadata.EventHttpService;
-import io.github.zero88.qwe.micro.metadata.EventMethodDefinition;
+import io.github.zero88.qwe.micro.http.ActionMethodMapping;
+import io.github.zero88.qwe.micro.http.EventHttpService;
+import io.github.zero88.qwe.micro.http.EventMethodDefinition;
 import io.github.zero88.qwe.sql.EntityMetadata;
 import io.github.zero88.utils.Urls;
 
