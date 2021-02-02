@@ -1,6 +1,5 @@
 package io.github.zero88.qwe.sql;
 
-import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,8 +9,7 @@ import javax.sql.DataSource;
 import org.jooq.Configuration;
 import org.jooq.impl.DefaultConfiguration;
 
-import io.github.zero88.qwe.IConfig;
-import io.github.zero88.qwe.component.Component;
+import io.github.zero88.qwe.component.ComponentContext;
 import io.github.zero88.qwe.component.ComponentVerticle;
 import io.github.zero88.qwe.component.SharedDataLocalProxy;
 import io.github.zero88.qwe.dto.ErrorMessage;
@@ -77,9 +75,8 @@ public final class SqlVerticle<T extends EntityHandler> extends ComponentVerticl
     public Class<SqlConfig> configClass() { return SqlConfig.class; }
 
     @Override
-    public SqlContext<T> onSuccess(@NonNull Class<Component<IConfig, SqlContext<T>>> aClass, Path dataDir,
-                                   String sharedKey, String deployId) {
-        return new SqlContext<>(aClass, dataDir, sharedKey, deployId, this.handler);
+    public SqlContext<T> onSuccess(@NonNull ComponentContext context) {
+        return new SqlContext<>(context, this.handler);
     }
 
     @Override
