@@ -15,6 +15,7 @@ on:
 
 env:
   ENABLE_TEST: false
+  ENABLE_GH_MAVEN: false
 
 jobs:
   context:
@@ -90,7 +91,7 @@ jobs:
                           -PbuildBy="GitHub Action" -PbuildHash=${{ github.sha }}
 
       - name: Publish GitHub Package
-        if: needs.context.outputs.shouldPublish == 'true'
+        if: needs.context.outputs.isRelease == 'true' && env.ENABLE_GH_MAVEN == 'true'
         run: |
           args=( -Psigning.gnupg.homeDir=/home/runner/.gnupg \
                  -Psigning.gnupg.keyName=${{ steps.import_gpg.outputs.keyid }} \
