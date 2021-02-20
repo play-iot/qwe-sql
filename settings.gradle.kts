@@ -8,6 +8,14 @@
  */
 
 rootProject.name = "qwe-sql"
+pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+        maven { url = uri("https://oss.sonatype.org/content/groups/public/") }
+    }
+}
+
 include(":type")
 include(":rx-jdbc")
 include(":core")

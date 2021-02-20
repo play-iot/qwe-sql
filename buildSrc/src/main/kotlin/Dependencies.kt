@@ -118,6 +118,7 @@ object ZeroLibs {
         const val jpaExt = "0.9.0"
         const val rSql = "0.9.0"
         const val qwe = "0.6.1-SNAPSHOT"
+        const val plugin = "1.0.0-SNAPSHOT"
     }
 
     const val utils = "io.github.zero88:java-utils:${Version.utils}"
@@ -130,4 +131,9 @@ object ZeroLibs {
     const val qwe_http_client = "io.github.zero88.qwe.http:client:${Version.qwe}"
     const val qwe_micro = "io.github.zero88.qwe:micro:${Version.qwe}"
     const val qwe_micro_metadata = "io.github.zero88.qwe.micro:metadata:${Version.qwe}"
+
+    object Plugins {
+        const val oss = "io.github.zero88.qwe.gradle.oss"
+        const val root = "io.github.zero88.qwe.gradle.root"
+    }
 }
